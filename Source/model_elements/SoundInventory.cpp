@@ -60,7 +60,7 @@ Phoneme* SoundInventory::GetRandomPhoneme(PhoneType type)
     float searchsize = GetRandomNormal() * (float)m_PhonemePool.size();
 
     // Loop through the phoneme pool.
-    while (searchsize > 0.f) {
+    while (searchsize >= 0.f) {
         for (auto p : m_PhonemePool) {
             // Make sure our phoneme is actually of the right type before we modify the search
             if (p->GetPhone()->GetPhoneType() == type) {
@@ -73,6 +73,7 @@ Phoneme* SoundInventory::GetRandomPhoneme(PhoneType type)
             }
         }
     }
+
     return phoneme;
 }
 

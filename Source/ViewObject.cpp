@@ -1,4 +1,7 @@
-﻿#include "ViewObject.h"
+﻿// Necessary so that certain FL includes which require x.h don't try to find X11 for windows.
+#define WIN32
+
+#include "ViewObject.h"
 #include "Constants.h"
 #include "PresenterObject.h"
 #include "gui_elements/MainMenu.h"
@@ -6,6 +9,8 @@
 #include <iostream>
 #include <FL/Fl_Hor_Slider.h>
 #include <FL/Fl_Scroll.H>
+#include <FL/Fl_Text_Display.H>
+#include <FL/Fl_Text_Buffer.H>
 
 
 ViewObject::ViewObject(PresenterObject* p) :
@@ -22,9 +27,11 @@ ViewObject::ViewObject(PresenterObject* p) :
 	m_Tabs->selection_color(FL_DARK3);
 
 		Fl_Group* m_OutputGroup = new Fl_Group(0, 20, WINDOW_WIDTH, WINDOW_HEIGHT - 40, "Vocabulary");
-			generatedMultilineOutput = new Fl_Multiline_Output(m_OutputGroup->x()+20, m_OutputGroup->y()+20, WINDOW_WIDTH-40, WINDOW_HEIGHT-364, "Complete Vocabulary");
-			generatedMultilineOutput->align(FL_ALIGN_TOP);
-			generatedMultilineOutput->labelsize(12);
+            m_VocabularyTextDisplayIPA = new Fl_Text_Display(m_OutputGroup->x() + 20, m_OutputGroup->y() + 20, WINDOW_WIDTH - 40, WINDOW_HEIGHT - 364, "Complete Vocabulary (IPA)");
+            m_VocabularyTextDisplayOrtho = new Fl_Text_Display(m_OutputGroup->x() + 20, m_OutputGroup->y() + WINDOW_HEIGHT - 364 + 40, WINDOW_WIDTH - 40, WINDOW_HEIGHT - 364, "Complete Vocabulary (Orthographic)");
+			//generatedMultilineOutput = new Fl_Multiline_Output(m_OutputGroup->x()+20, m_OutputGroup->y()+20, WINDOW_WIDTH-40, WINDOW_HEIGHT-364, "Complete Vocabulary");
+			//generatedMultilineOutput->align(FL_ALIGN_TOP);
+			//generatedMultilineOutput->labelsize(12);
 
 
             m_GenerateVocabularyButton = new Fl_Button(240, WINDOW_HEIGHT-60, 120, 40, "Generate Vocabulary");
@@ -47,6 +54,7 @@ ViewObject::ViewObject(PresenterObject* p) :
             PhonemeWidget* pw = new PhonemeWidget(40, 40 + 20 * i, 200, 20, glyph->c_str(), weight);
             m_PhonemeWidgets.push_back(pw);
             m_PhonesGroup->add(pw);
+            //delete glyph;
         }
 
 		m_PhonesGroup->end();
@@ -94,16 +102,17 @@ void ViewObject::syllableMaximumCallback(Fl_Widget * w, void * v)
 
 void ViewObject::GenerateVocabularyButtonCallback(Fl_Widget * w, void* v)
 {
-	Fl_Multiline_Output* outputBox = (Fl_Multiline_Output*)v;
+    Fl_Text_Buffer* buffer = new Fl_Text_Buffer();
+	Fl_Text_Display* textdisplay = (Fl_Text_Display*)v;
 	m_Presenter->CreateVocabulary();
 	std::string* returnString = m_Presenter->GetAllWordsAsStringPtr();
-	//returnString += m_Presenter->GetSentenceAsStringAt(m_Presenter->SentenceCount()-1) + "\n";
-	outputBox->value(returnString->c_str());
+    textdisplay->buffer(buffer);
+	buffer->text(returnString->c_str());
 	std::cout << returnString;
     delete returnString;
 }
 
 void ViewObject::GenerateVocabularyButtonStaticCallback(Fl_Widget *w, void *v)
 {
-	((ViewObject*)v)->GenerateVocabularyButtonCallback(w, ((ViewObject*)v)->generatedMultilineOutput );
+	((ViewObject*)v)->GenerateVocabularyButtonCallback(w, ((ViewObject*)v)->m_VocabularyTextDisplayIPA);
 }

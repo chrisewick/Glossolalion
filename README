@@ -1,0 +1,52 @@
+﻿
+------------
+Glossolalion
+------------
+A Generative Language Program by Christopher Chellew
+----------------------------------------------------
+This program is in alpha phases but I'm taking it seriously enough to give it
+some version control, hence its existence on this public repo.
+
+The overarching purpose of the Glossolalion is to create a generator for
+constructed languages. The broad-stroked objectives are as follows:
+
+1) Glossolalia: Create strings of words that flow together like glossolalia,
+   also known as speaking in tongues. In this phase, the program will also
+   generate orthographic representations of sounds, largely relying on English
+   and romanized orthography, because it's what I know.
+2) Morphemes: Words aren't just arbitrary collections of syllables; syllables
+   can be broken down into meaningful units called morphemes. A better
+   generated language would contain these morphemes and build its words from
+   them.
+3) Parts of speech: Take individual words and assign them parts of speech.
+   This would mark the beginnings of a semantic grammar.
+4a) Poetry: Using whatever AI strategies I can learn, once Glossolalion has
+    generated a language, it would be great if I could teach it to write
+	poetry.
+4b) Internationalization: The nature of this project makes it such that coding
+    for internationalization will be inherently simpler. The project relies on
+	UTF-8 for its coding, which is the de facto character encoding for most of
+	the world. An important later-stage step would be to really push the
+	readability and usability of this program on a global scale.
+
+I am somewhat of a novice with only a few years of student C++11 under my belt,
+so this code isn't impeccable, but I strive to keep it clean and well
+commented. I appreciate any and all constructive feedback.
+
+Thank you for taking the time to look at Glossolalion!
+
+- Christopher Chellew (chrisewick@gmail.com)
+December 30, 2019
+
+Notes:
+FLTK must be installed on your system and linked to the project for this to
+build successfully.
+
+Glossolalion uses FLTK 1.3.5, which is distributed under the GPL.
+
+You are free to look at and alter Glossolalion for educational purposes,
+although as yet no formal license for it has been established.
+
+----------------------------------
+Copyleft Christopher Chellew, 2019
+----------------------------------

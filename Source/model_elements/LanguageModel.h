@@ -23,7 +23,7 @@ public:
     SoundInventory* GetSoundInventory();
 
 protected:
-    uint32 m_MinSyllables = 0;
+    uint32 m_MinSyllables = 1;
     uint32 m_MaxSyllables = 5;
     uint32 m_VocabularySize = 10000;
     std::vector<Word*> m_Vocabulary;
