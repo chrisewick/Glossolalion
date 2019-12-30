@@ -7,7 +7,7 @@ class Fl_Value_Input;
 
 class PhonemeWidget : public Fl_Pack {
 public:
-	PhonemeWidget(int x, int y, int w, int h, std::string glyph, float weight,const char *l=0);
+	PhonemeWidget(int x, int y, int w, int h, const char* l, float weight);
 	~PhonemeWidget();
 private:
 	Fl_Check_Button* m_IPAGlyph;

@@ -12,7 +12,8 @@ public:
     LanguageModel();
     ~LanguageModel();
 
-    void CreateVocabulary();
+    bool CreateVocabulary();
+    std::vector<Word*> GetVocabulary();
 
     uint32 GetMaxSyllables();
     uint32 GetMinSyllables();

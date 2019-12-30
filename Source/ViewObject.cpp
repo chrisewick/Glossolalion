@@ -15,31 +15,19 @@ ViewObject::ViewObject(PresenterObject* p) :
 	// MainMenu is really crashy and I have no idea why, so let's just leave it out for now, since it isn't even important.
 	// m_MainMenu = new MainMenu(0, 0, WINDOW_WIDTH, 30); // new Fl_Menu_Bar();
 
-
 	// our main interface
 	// declare and initialize
-
-	// This can appear in the Orthography tab
-	// diacritCheckButton = new Fl_Check_Button(34, 48, 12, 12, "Use diacritical marks");
-
-	// This can appear in the phones tab
-	// glottalstopCheckButton = new Fl_Check_Button(34, 72, 12, 12, "Include glottal stops");
 
 	m_Tabs = new Fl_Tabs(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Tabs");
 	m_Tabs->selection_color(FL_DARK3);
 
-		Fl_Group* m_OutputGroup = new Fl_Group(0, 20, WINDOW_WIDTH, WINDOW_HEIGHT - 40, "Output");
-			generatedMultilineOutput = new Fl_Multiline_Output(m_OutputGroup->x()+20, m_OutputGroup->y()+20, WINDOW_WIDTH-40, WINDOW_HEIGHT-364, "Generated text");
+		Fl_Group* m_OutputGroup = new Fl_Group(0, 20, WINDOW_WIDTH, WINDOW_HEIGHT - 40, "Vocabulary");
+			generatedMultilineOutput = new Fl_Multiline_Output(m_OutputGroup->x()+20, m_OutputGroup->y()+20, WINDOW_WIDTH-40, WINDOW_HEIGHT-364, "Complete Vocabulary");
 			generatedMultilineOutput->align(FL_ALIGN_TOP);
 			generatedMultilineOutput->labelsize(12);
 
-			/*m_IPABuffer = new Fl_Text_Buffer();
-			m_IPADisplay = new Fl_Text_Display(m_OutputGroup->x() + 20, m_OutputGroup->y() + 20 + 200, WINDOW_WIDTH - 40, 200, "Generated text");
-			m_IPADisplay->buffer(m_IPABuffer);
-			m_IPABuffer->text(u8"This string is encoded in UTF-8. See? ŋ");
-			m_IPABuffer->append("This should also be UTF-8 encoded. Right? ŋ");*/
-	
-			generateButton = new Fl_Button(240, WINDOW_HEIGHT-60, 120, 40, "Generate Words");
+
+            m_GenerateVocabularyButton = new Fl_Button(240, WINDOW_HEIGHT-60, 120, 40, "Generate Vocabulary");
 		m_OutputGroup->end();
 
 		Fl_Group* m_TabSyllables = new Fl_Group(0, 20, WINDOW_WIDTH, WINDOW_HEIGHT, "Syllables");
@@ -53,25 +41,14 @@ ViewObject::ViewObject(PresenterObject* p) :
 		Fl_Group* m_PhonesGroup = new Fl_Scroll(0, 20, WINDOW_WIDTH, WINDOW_HEIGHT-80, "Phones");
         m_Presenter->ResetPhoneSetIterator();
         for (int i = 0; i < m_Presenter->GetPhoneSetSize(); i++) {
-            std::string glyph = m_Presenter->GetIPAGlyphForCurrentPhone();
+            std::string *glyph = new std::string(m_Presenter->GetIPAGlyphForCurrentPhone());
             float weight = m_Presenter->GetWeightForCurrentPhone();
             m_Presenter->GoToNextPhone();
-            PhonemeWidget* pw = new PhonemeWidget(40, 40 + 20 * i, 200, 20, glyph, weight);
+            PhonemeWidget* pw = new PhonemeWidget(40, 40 + 20 * i, 200, 20, glyph->c_str(), weight);
             m_PhonemeWidgets.push_back(pw);
             m_PhonesGroup->add(pw);
         }
-            // Previous version:
-			// m_PhonemeWidgets.push_back(new PhonemeWidget(40,40,200,20, u8"ʣ"));
-			// m_PhonesGroup->add(m_PhonemeWidgets.at(0));
-			/*
-			Fl_Check_Button* m_GlideW = new Fl_Check_Button(20, 40, 20, 20, u8"ʣ"); // vd postalveolar affricate 02A4 ʣ \x02\xA4
-			Fl_Hor_Slider* m_GlideWSlider = new Fl_Hor_Slider(60, 40, 200, 20);
-			Fl_Value_Input* m_GlideWValueInput = new Fl_Value_Input(280, 40, 40, 20);
-			m_GlideW->value(true);
-			Fl_Check_Button* m_GlideY = new Fl_Check_Button(20, 60, 20, 20, u8"ʃ");
-			m_GlideY->labelfont(FL_COURIER);
-			Fl_Check_Button* m_GlideL = new Fl_Check_Button(20, 80, 20, 20, u8"ɪ");
-			Fl_Check_Button* m_GlideR = new Fl_Check_Button(20, 100, 20, 20, u8"ŋ"); */
+
 		m_PhonesGroup->end();
 
 	m_Tabs->end();
@@ -90,7 +67,7 @@ ViewObject::ViewObject(PresenterObject* p) :
 	// define callback functions and their triggering behaviours for each widget
 	syllableMinimumValueInput->callback(syllableMinimumCallback, syllableIdealValueInput);
 	syllableMaximumValueInput->callback(syllableMaximumCallback, syllableIdealValueInput);
-	generateButton->callback(static_cb, (void*)this);
+    m_GenerateVocabularyButton->callback(GenerateVocabularyButtonStaticCallback, (void*)this);
 }
 
 ViewObject::~ViewObject()
@@ -115,17 +92,18 @@ void ViewObject::syllableMaximumCallback(Fl_Widget * w, void * v)
 	}
 }
 
-void ViewObject::generateButtonCallback(Fl_Widget * w, void* v)
+void ViewObject::GenerateVocabularyButtonCallback(Fl_Widget * w, void* v)
 {
 	Fl_Multiline_Output* outputBox = (Fl_Multiline_Output*)v;
-	//m_Presenter->CreateSentence(syllableMinimumValueInput->value(), syllableMaximumValueInput->value());
-	std::string returnString = outputBox->value();
+	m_Presenter->CreateVocabulary();
+	std::string* returnString = m_Presenter->GetAllWordsAsStringPtr();
 	//returnString += m_Presenter->GetSentenceAsStringAt(m_Presenter->SentenceCount()-1) + "\n";
-	//outputBox->value(returnString.c_str());
-	//std::cout << returnString;
+	outputBox->value(returnString->c_str());
+	std::cout << returnString;
+    delete returnString;
 }
 
-void ViewObject::static_cb(Fl_Widget *w, void *v)
+void ViewObject::GenerateVocabularyButtonStaticCallback(Fl_Widget *w, void *v)
 {
-	((ViewObject*)v)->generateButtonCallback(w, ((ViewObject*)v)->generatedMultilineOutput );
+	((ViewObject*)v)->GenerateVocabularyButtonCallback(w, ((ViewObject*)v)->generatedMultilineOutput );
 }

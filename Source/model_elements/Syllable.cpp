@@ -27,5 +27,22 @@ Syllable::~Syllable()
 
 std::string Syllable::ToString()
 {
-    return std::string();
+    //TODO: Use orthographies instead. Also, write a "ToIPAString" fn
+    std::string output;
+
+    if (!m_Onset.empty()) {
+        for (int i = 0; i < m_Onset.size(); i++) {
+            output.append(m_Onset[i]->GetPhone()->GetIPAGlyph());
+        }
+    }
+    if (m_Nucleus != nullptr) {
+        output.append(m_Nucleus->GetPhone()->GetIPAGlyph());
+    }
+    if (!m_Coda.empty()) {
+        for (int i = 0; i < m_Coda.size(); i++) {
+            output.append(m_Coda[i]->GetPhone()->GetIPAGlyph());
+        }
+    }
+
+    return output;
 }

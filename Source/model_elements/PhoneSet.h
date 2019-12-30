@@ -57,7 +57,7 @@ private:
     std::string m_TrillsTaps[TRILLS] = { u8"ʙ", u8"ⱱ", u8"r", u8"ɾ", u8"ɽ", u8"ʀ" };
     std::string m_Fricatives[FRICATIVES] = { u8"ɸ", u8"β", u8"f", u8"v", u8"θ", u8"ð", u8"s", u8"z", u8"ʃ", u8"ʒ", u8"ʂ", u8"ʐ", u8"ç", u8"ʝ", u8"x", u8"ɣ", u8"χ", u8"ʁ", u8"ħ", u8"ʕ", u8"h", u8"ɦ" };
     std::string m_Approximants[APPROXIMANTS] = { u8"ʋ", u8"ɹ", u8"ɻ", u8"j", u8"ɰ", u8"ʍ", u8"w", u8"ɥ" };
-    std::string m_LateralApproximants[LATERALAPPROXIMANTS] = { u8"ɬ", u8"ɮ", u8"u8", u8"ɭ", u8"ʎ", u8"ʟ", u8"ɫ" };
+    std::string m_LateralApproximants[LATERALAPPROXIMANTS] = { u8"ɬ", u8"ɮ", u8"l", u8"ɭ", u8"ʎ", u8"ʟ", u8"ɫ" };
     std::string m_Implosives[IMPLOSIVES] = { u8"ƥ", u8"ɓ", u8"ƭ", u8"ɗ", u8"ƈ", u8"ʄ", u8"ƙ", u8"ɠ", u8"ʠ", u8"ʛ" };
     std::string m_Clicks[CLICKS] = { u8"ʘ", u8"ǀ", u8"ǁ", u8"ǃ", u8"ǂ" };
     std::string m_Affricatives[AFFRICATIVES] = { u8"ʦ", u8"ʣ", u8"ʧ", u8"ʤ", u8"ʨ", u8"ʥ" };

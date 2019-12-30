@@ -27,9 +27,9 @@ public:
 
 	static void syllableMinimumCallback(Fl_Widget* w, void *v);
 	static void syllableMaximumCallback(Fl_Widget* w, void *v);
-	void generateButtonCallback(Fl_Widget* w, void *v); // "ActualGenerate"
+	void GenerateVocabularyButtonCallback(Fl_Widget* w, void *v);
 
-	static void static_cb(Fl_Widget* w, void *v);
+	static void GenerateVocabularyButtonStaticCallback(Fl_Widget* w, void *v);
 private:
 	PresenterObject* m_Presenter;
 	// MainMenu* m_MainMenu;
@@ -48,7 +48,7 @@ private:
 	Fl_Text_Buffer* m_IPABuffer;
 	Fl_Text_Display* m_IPADisplay;
 
-	Fl_Button* generateButton;
+	Fl_Button* m_GenerateVocabularyButton;
 	Fl_Tabs* m_Tabs;
 
 	std::vector<PhonemeWidget*> m_PhonemeWidgets;

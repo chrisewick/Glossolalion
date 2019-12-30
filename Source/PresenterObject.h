@@ -15,6 +15,9 @@ public:
     void SaveLanguageModel();
     void LoadLanguageModel(const char* filename);
 
+    // Word behaviour
+    std::string* GetAllWordsAsStringPtr();
+
     // Syllable behaviour
     int GetMaxSyllables();
     int GetMinSyllables();

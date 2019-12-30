@@ -17,5 +17,10 @@ Word::~Word()
 
 std::string Word::ToString()
 {
-    return std::string();
+    std::string output;
+    for (int i = 0; i < m_Syllables.size(); i++) {
+        output.append(m_Syllables[i]->ToString());
+    }
+
+    return output;
 }

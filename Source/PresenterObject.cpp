@@ -5,6 +5,7 @@
 #include "model_elements/SoundInventory.h"
 #include "model_elements/Phoneme.h"
 #include "model_elements/PhoneSet.h"
+#include "model_elements/Word.h"
 
 PresenterObject::PresenterObject(ViewObject * v, LanguageModel* lm)
 {
@@ -18,18 +19,35 @@ PresenterObject::~PresenterObject()
 
 void PresenterObject::GenerateRandomLanguageModel()
 {
+    //TODO: do I flush the current language model, or store the old one and generate a new one? Seems like a broader design question.
 }
 
 void PresenterObject::CreateVocabulary()
 {
+    //TODO: Report on failure.
+    m_LanguageModel->CreateVocabulary();
 }
 
 void PresenterObject::SaveLanguageModel()
 {
+    //TODO: 
 }
 
 void PresenterObject::LoadLanguageModel(const char* filename)
 {
+    //TODO:
+}
+
+std::string* PresenterObject::GetAllWordsAsStringPtr()
+{
+    std::string* output = new std::string();
+    std::vector<Word*> vocab = m_LanguageModel->GetVocabulary();
+    int vocab_size = (int)vocab.size();
+    for (int i = 0; i < vocab_size; i++) {
+        output->append(vocab[i]->ToString());
+        output->append("\n");
+    }
+    return output;
 }
 
 int PresenterObject::GetMaxSyllables()

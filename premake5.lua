@@ -2,7 +2,7 @@ workspace "Glossolalion"
 	location	"Build"
 	configurations { "Debug", "Release" }
 	filter "system:windows"
-		platforms { "x64" }
+		platforms { "x64", "x86" }
 		characterset "Unicode"
 
 project "Glossolalion"

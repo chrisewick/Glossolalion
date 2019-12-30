@@ -6,8 +6,6 @@
 LanguageModel::LanguageModel()
 {
     m_SoundInventory = new SoundInventory();
-
-    CreateVocabulary();
 }
 
 LanguageModel::~LanguageModel()
@@ -19,16 +17,27 @@ LanguageModel::~LanguageModel()
     }
 }
 
-void LanguageModel::CreateVocabulary()
+bool LanguageModel::CreateVocabulary()
 {
 
     //TODO: Make this more sophisticated, naturally.
     //This is sufficient for now, but I'll need to consider
     //morphology as the next major concept in word construction.
     //That is, I would likely have a Morpheme class and a MorphemeInventory.
-    for (uint32 i = 0; i < m_VocabularySize; i++) {
-        m_Vocabulary.push_back(new Word(this, m_SoundInventory));
+
+    if (m_Vocabulary.empty()) {
+        for (uint32 i = 0; i < m_VocabularySize; i++) {
+            m_Vocabulary.push_back(new Word(this, m_SoundInventory));
+        }
+        return true;
+    } else {
+        return false;
     }
+}
+
+std::vector<Word*> LanguageModel::GetVocabulary()
+{
+    return m_Vocabulary;
 }
 
 uint32 LanguageModel::GetMaxSyllables()

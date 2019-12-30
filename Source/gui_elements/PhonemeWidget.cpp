@@ -6,11 +6,11 @@
 #include <FL/Fl_Hor_Slider.H>
 #include <FL/Fl_Value_Input.H>
 
-PhonemeWidget::PhonemeWidget(int x, int y, int w, int h, std::string glyph, float weight, const char* l)
+PhonemeWidget::PhonemeWidget(int x, int y, int w, int h, const char* l, float weight)
     : Fl_Pack(x, y, w, h, nullptr)
 {
 	type(HORIZONTAL);
-    m_IPAGlyph = new Fl_Check_Button(x, y, 40, 20, glyph.c_str()); // u8"ʣ");
+    m_IPAGlyph = new Fl_Check_Button(x, y, 40, 20, l); // u8"ʣ");
 	m_frequencySlider = new Fl_Hor_Slider(x, y, 200, 20);
 	m_frequencySlider->value(true);
 	m_frequencyValue = new Fl_Value_Input(x, y, 40, 20);
