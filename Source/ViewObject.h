@@ -45,7 +45,8 @@ private:
 	Fl_Value_Input* syllableIdealValueInput;
 	Fl_Multiline_Output* generatedMultilineOutput;
 
-	Fl_Text_Buffer* m_TextBuffer;
+	Fl_Text_Buffer* m_VocabularyTextDisplayIPA_Buffer;
+    Fl_Text_Buffer* m_VocabularyTextDisplayOrtho_Buffer;
 	Fl_Text_Display* m_VocabularyTextDisplayIPA;
     Fl_Text_Display* m_VocabularyTextDisplayOrtho;
 

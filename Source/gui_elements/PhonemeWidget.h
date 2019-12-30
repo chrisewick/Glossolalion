@@ -10,6 +10,7 @@ public:
 	PhonemeWidget(int x, int y, int w, int h, const char* l, float weight);
 	~PhonemeWidget();
 private:
+    std::string* m_Glyph;
 	Fl_Check_Button* m_IPAGlyph;
 	Fl_Slider* m_frequencySlider;
 	Fl_Value_Input* m_frequencyValue;
