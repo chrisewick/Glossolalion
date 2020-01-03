@@ -62,12 +62,14 @@ ViewObject::ViewObject(PresenterObject* p) :
             glyph->append(m_Presenter->GetIPAGlyphForCurrentPhone());
             float weight = m_Presenter->GetWeightForCurrentPhone();
             m_Presenter->GoToNextPhone();
-            PhonemeWidget* pw = new PhonemeWidget(40, 40 + 20 * i, 200, 20, glyph->c_str(), weight);
+            PhonemeWidget* pw = new PhonemeWidget(40, 40 + 20 * i, 200, 20, this, glyph->c_str(), weight);
             m_PhonemeWidgets.push_back(pw);
             m_PhonesGroup->add(pw);
             glyph->clear();
         }
         delete glyph;
+
+        m_GenerateNewSoundInventoryButton = new Fl_Button(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT - 60, 120, 140, "Generate New Sound Inventory");
 
 		m_PhonesGroup->end();
 

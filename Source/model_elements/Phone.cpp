@@ -4,7 +4,8 @@ Phone::Phone(std::string ipa_glyph, PhoneType type, ObstruentSubType subtype) :
     m_IPAGlyph(ipa_glyph),
     m_PhoneType(type),
     m_Weight(0.0f),
-    m_ObstruentSubType(subtype)
+    m_ObstruentSubType(subtype),
+    m_IsActive(false)
 {
 }
 
@@ -38,4 +39,14 @@ void Phone::NextOrthography()
 std::string Phone::GetCurrentOrthography()
 {
     return *m_CurrentOrthography;
+}
+
+bool Phone::GetIsActive()
+{
+    return m_IsActive;
+}
+
+void Phone::SetIsActive(bool value)
+{
+    m_IsActive = value;
 }

@@ -117,6 +117,7 @@ Phoneme* SoundInventory::GetPhonemeByIdentifier(std::string identifier)
 
 void SoundInventory::PickRandomVowels()
 {
+    // Retreive all vowels from the PhoneSet.
     std::vector<Phone*> vowel_phones;
     for (int i = 0; i < m_PhoneSet->GetSize(); i++) {
         Phone* p;
@@ -135,17 +136,20 @@ void SoundInventory::PickRandomVowels()
         p->SetWeight(GetRandomNormal());
     }
 
+    // Add all of our vowels to the phoneme pool.
     for (int i = 0; i < m_VowelPoolSize; i++) {
         Phoneme* phoneme;
         do {
             phoneme = GetRandomPhone(vowel_phones);
         } while(CheckIsUniquePhoneme(phoneme) == false);
+        phoneme->GetPhone()->SetIsActive(true); // Activate the phone.
         m_PhonemePool.push_back(phoneme);
     }
 }
 
 void SoundInventory::PickRandomConsonants()
 {
+    // Retreive all consonants from the PhoneSet.
     std::vector<Phone*> consonant_phones;
     for (int i = 0; i < m_PhoneSet->GetSize(); i++) {
         Phone* p;
@@ -165,11 +169,13 @@ void SoundInventory::PickRandomConsonants()
         p->SetWeight(GetRandomNormal());
     }
 
+    // Add all of our consonantss to the phoneme pool.
     for (int i = 0; i < m_PhonemePoolSize - m_VowelPoolSize; i++) {
         Phoneme* phoneme;
         do {
             phoneme = GetRandomPhone(consonant_phones);
         } while (CheckIsUniquePhoneme(phoneme) == false);
+        phoneme->GetPhone()->SetIsActive(true); // Activate the phone.
         m_PhonemePool.push_back(phoneme);
     }
 }

@@ -37,6 +37,13 @@ public:
     float GetPhonemeWeight(std::string identifier);
     void SetPhonemeWeight(std::string identifier, float new_weight);
 
+    //Phone Behaviour
+    float GetWeightForPhone(std::string phoneglyph);
+    void SetWeightForPhone(std::string phoneglyph, float weight);
+    bool GetIsActiveForPhone(std::string phoneglyph);
+    void SetIsActiveForPhone(std::string phoneglyph, bool value);
+    void RandomizeWeightsForAllActivePhones();
+
 private:
 	ViewObject* m_ViewObject;
     LanguageModel* m_LanguageModel;

@@ -1,6 +1,5 @@
 #include "PresenterObject.h"
 #include "ViewObject.h"
-#include "Constants.h"
 #include "model_elements/LanguageModel.h"
 #include "model_elements/SoundInventory.h"
 #include "model_elements/Phoneme.h"
@@ -113,4 +112,29 @@ float PresenterObject::GetPhonemeWeight(std::string identifier)
 void PresenterObject::SetPhonemeWeight(std::string identifier, float new_weight)
 {
     m_LanguageModel->GetSoundInventory()->GetPhonemeByIdentifier(identifier)->SetWeight(new_weight);
+}
+
+float PresenterObject::GetWeightForPhone(std::string phoneglyph)
+{
+    return m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->GetWeight();
+}
+
+void PresenterObject::SetWeightForPhone(std::string phoneglyph, float weight)
+{
+    m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->SetWeight(weight);
+}
+
+bool PresenterObject::GetIsActiveForPhone(std::string phoneglyph)
+{
+    return m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->GetIsActive();
+}
+
+void PresenterObject::SetIsActiveForPhone(std::string phoneglyph, bool value)
+{
+    m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->SetIsActive(value);
+}
+
+void PresenterObject::RandomizeWeightsForAllActivePhones()
+{
+    //TODO: Build this.
 }

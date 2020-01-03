@@ -30,6 +30,8 @@ public:
 	void GenerateVocabularyButtonCallback(Fl_Widget* w, void *v);
 
 	static void GenerateVocabularyButtonStaticCallback(Fl_Widget* w, void *v);
+
+    PresenterObject* GetPresenter() { return m_Presenter; };
 private:
 	PresenterObject* m_Presenter;
 	// MainMenu* m_MainMenu;
@@ -37,13 +39,9 @@ private:
 	std::vector<Fl_Check_Button*> vowelCheckButtons;
 	std::vector<Fl_Check_Button*> consonantCheckButtons;
 	std::vector<Fl_Check_Button*> consonantTypesCheckButtons;
-	Fl_Check_Button* diacritCheckButton;
-	Fl_Check_Button* glottalstopCheckButton;
-	Fl_Group* syllableCountGroup;
 	Fl_Value_Input* syllableMinimumValueInput;
 	Fl_Value_Input* syllableMaximumValueInput;
 	Fl_Value_Input* syllableIdealValueInput;
-	Fl_Multiline_Output* generatedMultilineOutput;
 
 	Fl_Text_Buffer* m_VocabularyTextDisplayIPA_Buffer;
     Fl_Text_Buffer* m_VocabularyTextDisplayOrtho_Buffer;
@@ -51,6 +49,7 @@ private:
     Fl_Text_Display* m_VocabularyTextDisplayOrtho;
 
 	Fl_Button* m_GenerateVocabularyButton;
+    Fl_Button* m_GenerateNewSoundInventoryButton;
 	Fl_Tabs* m_Tabs;
 
 	std::vector<PhonemeWidget*> m_PhonemeWidgets;

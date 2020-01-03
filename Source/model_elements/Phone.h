@@ -27,6 +27,9 @@ public:
     float GetWeight() {        return m_Weight;    }
     void SetWeight(float weight) {      m_Weight = weight;  }
 
+    bool GetIsActive();
+    void SetIsActive(bool value);
+
 protected:
     std::string m_IPAGlyph;
     PhoneType m_PhoneType;
@@ -34,5 +37,6 @@ protected:
     std::vector<std::string> m_Orthographies;
     float m_Weight;
     std::vector<std::string>::iterator m_CurrentOrthography;
+    bool m_IsActive;
 private:
 };
