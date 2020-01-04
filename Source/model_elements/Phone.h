@@ -14,7 +14,7 @@ public:
     ~Phone();
 
     // I want these all to return results for UI purposes.
-    bool AddOrthography(std::string newortho);
+    bool AddOrthography(std::string newortho, bool makecurrent = false);
     bool RemoveCurrentOrtho();
     bool RemoveOrtho(std::string removedortho);
 

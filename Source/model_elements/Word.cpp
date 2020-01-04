@@ -15,12 +15,16 @@ Word::~Word()
 {
 }
 
-std::string Word::ToString()
+std::string Word::ToString(bool orthographic)
 {
     std::string output;
 
     for (int i = 0; i < m_Syllables.size(); i++) {
-        output.append(m_Syllables[i]->ToString());
+        if (orthographic == true) {
+            output.append(m_Syllables[i]->ToString(true));
+        } else {
+            output.append(m_Syllables[i]->ToString());
+        }
     }
 
     return output;

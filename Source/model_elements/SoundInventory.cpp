@@ -113,6 +113,8 @@ Phoneme* SoundInventory::GetPhonemeByIdentifier(std::string identifier)
             return phoneme;
         }
     }
+    assert(false);
+    return nullptr;
 }
 
 void SoundInventory::PickRandomVowels()
@@ -193,6 +195,8 @@ Phoneme* SoundInventory::GetRandomPhone(std::vector<Phone*> phone_mini_pool)
             }
         }
     }
+    assert(false);
+    return nullptr;
 }
 
 bool SoundInventory::CheckIsUniquePhoneme(Phoneme* phoneme)

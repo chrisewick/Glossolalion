@@ -13,9 +13,12 @@ Phone::~Phone()
 {
 }
 
-bool Phone::AddOrthography(std::string newortho)
+bool Phone::AddOrthography(std::string newortho, bool makecurrent)
 {
-    return false;
+    //TODO: makecurrent is currently ignored, because I'm just building a test.
+    m_Orthographies.push_back(newortho);
+    m_CurrentOrthography = m_Orthographies.begin();
+    return true;
 }
 
 bool Phone::RemoveCurrentOrtho()

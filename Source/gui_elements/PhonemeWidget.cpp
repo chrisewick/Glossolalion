@@ -28,6 +28,7 @@ PhonemeWidget::PhonemeWidget(int x, int y, int w, int h, ViewObject* parent, con
     // Ties to the slider. I should change this so that it just shows the value as a number rather than allow it to be editable.
 	m_frequencyValue = new Fl_Value_Input(x, y, 120, 20);
     m_frequencyValue->bounds(0, 1.0);
+    m_frequencyValue->value(m_Parent->GetPresenter()->GetWeightForPhone(*m_Glyph));
 
     
     // Set up callbacks

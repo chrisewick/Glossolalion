@@ -37,13 +37,19 @@ void PresenterObject::LoadLanguageModel(const char* filename)
     //TODO:
 }
 
-std::string* PresenterObject::GetAllWordsAsStringPtr()
+std::string* PresenterObject::GetAllWordsAsStringPtr(bool orthographic)
 {
+    // Our return string.
     std::string* output = new std::string();
-    std::vector<Word*> vocab = m_LanguageModel->GetVocabulary();
+    // The vocabulary.
+    std::vector<Word*> vocab;
+    vocab = m_LanguageModel->GetVocabulary();
+
+    // Do this just so we aren't calling .size() an unknowably large amount of times; just a microoptimization
     int vocab_size = (int)vocab.size();
+
     for (int i = 0; i < vocab_size; i++) {
-        output->append(vocab[i]->ToString());
+        output->append(vocab[i]->ToString(orthographic));
         output->append("\n");
     }
     return output;

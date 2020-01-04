@@ -7,6 +7,21 @@ A Generative Language Program by Christopher Chellew
 This program is in alpha phases but I'm taking it seriously enough to give it
 some version control, hence its existence on this public repo.
 
+-----------
+--RUNNING--
+-----------
+Glossolalion is currently being built in Visual Studio 2019.
+This repo include premake and a batch file for generating the solution files.
+premake5.lua does not contain any instructions for including fltk, which is
+required for this program. Future builds will include a working copy of fltk in
+the source, once I figure out how that can work.
+
+As such, for now, consider this repository more of a demonstration of the work
+in progress as opposed to something that should be built and used.
+
+-----------
+--PURPOSE--
+-----------
 The overarching purpose of the Glossolalion is to create a generator for
 constructed languages. The broad-stroked objectives are as follows:
 

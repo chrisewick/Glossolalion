@@ -2,11 +2,6 @@
 #include "Phone.h"
 
 
-//const int IMPLOSIVES = 10;
-//const int CLICKS = 5;
-//const int AFFRICATIVES = 6;
-//const int VOWELS = 30;
-
 PhoneSet::PhoneSet()
 {
     // Phone(wchar_t ipa_glyph, PhoneType type, ObstruentSubType subtype = ObstruentSubType::NA);
@@ -16,33 +11,43 @@ PhoneSet::PhoneSet()
     // No, I don't know what that would look like.
     for (int i = 0; i < PLOSIVES; i++) {
         m_AllPhones[m_Plosives[i]] = new Phone(m_Plosives[i], PhoneType::Consonant, ObstruentSubType::Plosive);
+        m_AllPhones[m_Plosives[i]]->AddOrthography(m_PlosivesOrthos[i]);
     }
     for (int i = 0; i < NASALS; i++) {
         m_AllPhones[m_Nasals[i]] = new Phone(m_Nasals[i], PhoneType::Consonant, ObstruentSubType::Nasal);
+        m_AllPhones[m_Nasals[i]]->AddOrthography(m_NasalsOrthos[i]);
     }
     for (int i = 0; i < TRILLS; i++) {
         m_AllPhones[m_TrillsTaps[i]] = new Phone(m_TrillsTaps[i], PhoneType::Consonant, ObstruentSubType::TrillTap);
+        m_AllPhones[m_TrillsTaps[i]]->AddOrthography(m_TrillsTapsOrthos[i]);
     }
     for (int i = 0; i < FRICATIVES; i++) {
         m_AllPhones[m_Fricatives[i]] = new Phone(m_Fricatives[i], PhoneType::Consonant, ObstruentSubType::Fricative);
+        m_AllPhones[m_Fricatives[i]]->AddOrthography(m_FricativesOrthos[i]);
     }
     for (int i = 0; i < APPROXIMANTS; i++) {
         m_AllPhones[m_Approximants[i]] = new Phone(m_Approximants[i], PhoneType::Consonant, ObstruentSubType::Approximant);
+        m_AllPhones[m_Approximants[i]]->AddOrthography(m_ApproximantsOrthos[i]);
     }
     for (int i = 0; i < LATERALAPPROXIMANTS; i++) {
         m_AllPhones[m_LateralApproximants[i]] = new Phone(m_LateralApproximants[i], PhoneType::Consonant, ObstruentSubType::LateralApproximant);
+        m_AllPhones[m_LateralApproximants[i]]->AddOrthography(m_LateralApproximantsOrthos[i]);
     }
     for (int i = 0; i < IMPLOSIVES; i++) {
         m_AllPhones[m_Implosives[i]] = new Phone(m_Implosives[i], PhoneType::Consonant, ObstruentSubType::Implosive);
+        m_AllPhones[m_Implosives[i]]->AddOrthography(m_ImplosivesOrthos[i]);
     }
     for (int i = 0; i < CLICKS; i++) {
         m_AllPhones[m_Clicks[i]] = new Phone(m_Clicks[i], PhoneType::Consonant, ObstruentSubType::Click);
+        m_AllPhones[m_Clicks[i]]->AddOrthography(m_ClicksOrthos[i]);
     }
     for (int i = 0; i < AFFRICATIVES; i++) {
         m_AllPhones[m_Affricatives[i]] = new Phone(m_Affricatives[i], PhoneType::Consonant, ObstruentSubType::Affricative);
+        m_AllPhones[m_Affricatives[i]]->AddOrthography(m_AffricativesOrthos[i]);
     }
     for (int i = 0; i < VOWELS; i++) {
         m_AllPhones[m_Vowels[i]] = new Phone(m_Vowels[i], PhoneType::Vowel);
+        m_AllPhones[m_Vowels[i]]->AddOrthography(m_Vowels[i]);
     }
 
     m_AllPhonesIterator = m_AllPhones.begin();
@@ -66,11 +71,18 @@ PhoneSet::PhoneSet()
 
 PhoneSet::~PhoneSet()
 {
+    // Iterate through and clear the map of all phones.
+    PhoneMap::iterator it;
+    for (it = m_AllPhones.begin(); it != m_AllPhones.end(); it++) {
+        delete (*it).second;
+    }
 }
 
 Phone* PhoneSet::GetPhoneByIPAGlyph(std::string glyph)
 {
-    //TODO: check for existence, otherwise we're just creating an empty entry in a map
+    // This shouldn't happen, but if it does, we crash.
+    assert(m_AllPhones.count(glyph) > 0);
+
     return m_AllPhones[glyph];
 }
 

@@ -28,6 +28,7 @@ public:
 	static void syllableMinimumCallback(Fl_Widget* w, void *v);
 	static void syllableMaximumCallback(Fl_Widget* w, void *v);
 	void GenerateVocabularyButtonCallback(Fl_Widget* w, void *v);
+    void GenerateOrthographicVocabulary();
 
 	static void GenerateVocabularyButtonStaticCallback(Fl_Widget* w, void *v);
 

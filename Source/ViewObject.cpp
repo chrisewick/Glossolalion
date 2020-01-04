@@ -30,7 +30,7 @@ ViewObject::ViewObject(PresenterObject* p) :
         // One shows the IPA spellings, and the other shows orthographic spellings, though these haven't het been created.
 		Fl_Group* m_OutputGroup = new Fl_Group(0, 20, WINDOW_WIDTH, WINDOW_HEIGHT - 40, "Vocabulary");
             m_VocabularyTextDisplayIPA = new Fl_Text_Display(m_OutputGroup->x() + 20, m_OutputGroup->y() + 20, WINDOW_WIDTH - 40, WINDOW_HEIGHT - 364, "Complete Vocabulary (IPA)");
-            m_VocabularyTextDisplayOrtho = new Fl_Text_Display(m_OutputGroup->x() + 20, m_OutputGroup->y() + WINDOW_HEIGHT - 364 + 40, WINDOW_WIDTH - 40, WINDOW_HEIGHT - 364, "Complete Vocabulary (Orthographic)");
+            m_VocabularyTextDisplayOrtho = new Fl_Text_Display(m_OutputGroup->x() + 20, m_OutputGroup->y() + WINDOW_HEIGHT - 364 + 40, WINDOW_WIDTH - 40, WINDOW_HEIGHT - 364, "Complete Vocabulary (Semi-English Orthographic)");
 
             m_VocabularyTextDisplayIPA_Buffer = new Fl_Text_Buffer();
             m_VocabularyTextDisplayOrtho_Buffer = new Fl_Text_Buffer();
@@ -54,8 +54,11 @@ ViewObject::ViewObject(PresenterObject* p) :
         // The phones tab contains an inventory of all the phones that could possibly exist in a language, as well as showing the user
         // what phones are currently in the language (as phonemes; currently there is no distinction) and how frequently they are
         // likely to appear in words.
-        //TODO: Actually make this functional.
+        //TODO: Complete functionality.
 		Fl_Group* m_PhonesGroup = new Fl_Scroll(0, 20, WINDOW_WIDTH, WINDOW_HEIGHT-20, "Phones");
+
+        m_GenerateNewSoundInventoryButton = new Fl_Button(WINDOW_WIDTH - 240, 20, 210, 30, "Generate New Sound Inventory");
+
         m_Presenter->ResetPhoneSetIterator();
         std::string* glyph = new std::string();
         for (int i = 0; i < m_Presenter->GetPhoneSetSize(); i++) {
@@ -69,7 +72,6 @@ ViewObject::ViewObject(PresenterObject* p) :
         }
         delete glyph;
 
-        m_GenerateNewSoundInventoryButton = new Fl_Button(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT - 60, 120, 140, "Generate New Sound Inventory");
 
 		m_PhonesGroup->end();
 
@@ -120,11 +122,17 @@ void ViewObject::GenerateVocabularyButtonCallback(Fl_Widget * w, void* v)
 	m_Presenter->CreateVocabulary();
 	std::string* returnString = m_Presenter->GetAllWordsAsStringPtr();
 	m_VocabularyTextDisplayIPA_Buffer->text(returnString->c_str());
-	std::cout << returnString;
+    delete returnString;
+}
+
+void ViewObject::GenerateOrthographicVocabulary() {
+    std::string* returnString = m_Presenter->GetAllWordsAsStringPtr(true);
+    m_VocabularyTextDisplayOrtho_Buffer->text(returnString->c_str());
     delete returnString;
 }
 
 void ViewObject::GenerateVocabularyButtonStaticCallback(Fl_Widget *w, void *v)
 {
 	((ViewObject*)v)->GenerateVocabularyButtonCallback(w, ((ViewObject*)v)->m_VocabularyTextDisplayIPA);
+    ((ViewObject*)v)->GenerateOrthographicVocabulary();
 }

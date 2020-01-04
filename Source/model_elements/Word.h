@@ -12,7 +12,7 @@ public:
     Word(LanguageModel* language_model, SoundInventory* sound_inventory);
     ~Word();
 
-    std::string ToString();
+    std::string ToString(bool orthographic = false);
 
 protected:
     std::vector<Syllable*> m_Syllables;

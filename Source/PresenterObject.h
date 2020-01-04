@@ -16,7 +16,7 @@ public:
     void LoadLanguageModel(const char* filename);
 
     // Word behaviour
-    std::string* GetAllWordsAsStringPtr();
+    std::string* GetAllWordsAsStringPtr(bool orthographic = false); // orthographic is a flag for whether or not we want the string returned to be ortho or ipa.
 
     // Syllable behaviour
     int GetMaxSyllables();

@@ -11,7 +11,7 @@ public:
     Syllable(SoundInventory* sound_inventory);
     ~Syllable();
 
-    std::string ToString();
+    std::string ToString(bool orthographic = false);
 
 protected:
     Phoneme* m_Nucleus;

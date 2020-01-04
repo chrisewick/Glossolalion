@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <assert.h>
 
 // Constants for set sizes
 const int PLOSIVES = 13;
@@ -19,6 +20,7 @@ class Phone;
 
 typedef std::map<std::string, Phone*> PhoneMap;
 
+//TODO: Raname this to UniversalPhoneSet, which is a more representative class name.
 // A universal set containing all possible sounds that can exist in the SoundInventory.
 // The SoundInventory's vector of Phonemes will consist of a collection of sounds which will be a subset of this universal set.
 // I have a sneaking suspicion that this should be a Singleton.
@@ -53,15 +55,24 @@ private:
 
     // Consonants
     std::string m_Plosives[PLOSIVES] = { u8"p", u8"b", u8"t", u8"d", u8"ʈ", u8"ɖ", u8"c", u8"ɟ", u8"k", u8"ɡ", u8"q", u8"ɢ", u8"ʔ" };
+    std::string m_PlosivesOrthos[PLOSIVES] = { "p", "b", "t", "d", "t", "d", "c", "j", "k", "g", "q", "g", "-" };
     std::string m_Nasals[NASALS] = { u8"m", u8"ɱ", u8"n", u8"ɳ", u8"ɲ", u8"ŋ", u8"ɴ" };
+    std::string m_NasalsOrthos[NASALS] = { "m", "m", "n", "n", "ng", "ng" };
     std::string m_TrillsTaps[TRILLS] = { u8"ʙ", u8"ⱱ", u8"r", u8"ɾ", u8"ɽ", u8"ʀ" };
+    std::string m_TrillsTapsOrthos[TRILLS] = { "br", "v", "r", "r", "r", "r" };
     std::string m_Fricatives[FRICATIVES] = { u8"ɸ", u8"β", u8"f", u8"v", u8"θ", u8"ð", u8"s", u8"z", u8"ʃ", u8"ʒ", u8"ʂ", u8"ʐ", u8"ç", u8"ʝ", u8"x", u8"ɣ", u8"χ", u8"ʁ", u8"ħ", u8"ʕ", u8"h", u8"ɦ" };
+    std::string m_FricativesOrthos[FRICATIVES] = { "f", "v", "f", "v", "th", "th", "s", "z", "sh", "j", "sh", "j", "sh", "j", "ch", u8"ɣ", "ch", "r", "h", "r", "h", "h" };
     std::string m_Approximants[APPROXIMANTS] = { u8"ʋ", u8"ɹ", u8"ɻ", u8"j", u8"ɰ", u8"ʍ", u8"w", u8"ɥ" };
+    std::string m_ApproximantsOrthos[APPROXIMANTS] = { "v", "r", "r", "y", u8"ɰ", "wh", "w", "ui" };
     std::string m_LateralApproximants[LATERALAPPROXIMANTS] = { u8"ɬ", u8"ɮ", u8"l", u8"ɭ", u8"ʎ", u8"ʟ", u8"ɫ" };
+    std::string m_LateralApproximantsOrthos[LATERALAPPROXIMANTS] = { "l", u8"ɮ", "l", "l", "g", "l", "l" };
     std::string m_Implosives[IMPLOSIVES] = { u8"ƥ", u8"ɓ", u8"ƭ", u8"ɗ", u8"ƈ", u8"ʄ", u8"ƙ", u8"ɠ", u8"ʠ", u8"ʛ" };
+    std::string m_ImplosivesOrthos[IMPLOSIVES] = { "b", "b", "d", "d", u8"ƈ", "d", "g", "g", "g", "g" };
     std::string m_Clicks[CLICKS] = { u8"ʘ", u8"ǀ", u8"ǁ", u8"ǃ", u8"ǂ" };
+    std::string m_ClicksOrthos[CLICKS] = { u8"ʘ", u8"ǀ", u8"ǁ", u8"ǃ", u8"ǂ" }; // Unchanged because they really aren't represented in the Latin alphabet as far as I know.
     std::string m_Affricatives[AFFRICATIVES] = { u8"ʦ", u8"ʣ", u8"ʧ", u8"ʤ", u8"ʨ", u8"ʥ" };
-    std::string m_Null = u8"∅"; // I won't be employing this for the time being, since I don't really know what it does!
+    std::string m_AffricativesOrthos[AFFRICATIVES] = { "ts", "dz", "tch", "dg", u8"tch", u8"j" };
+    std::string m_Null = u8"∅"; // I won't be employing this for the time being, since I don't really know what it does linguistically.
 
     // Vowels
     std::string m_Vowels[VOWELS] = { u8"i", u8"y", u8"ɨ", u8"ʉ", u8"ɯ", u8"u", u8"ɪ", u8"ʏ", u8"ʊ", u8"e", u8"ø", u8"ɘ", u8"ɵ", u8"ɤ", u8"o", u8"ə", u8"ɛ", u8"œ", u8"ɜ", u8"ɞ", u8"ʌ", u8"ɔ", u8"æ", u8"ɐ", u8"a", u8"ɶ", u8"ɑ", u8"ɒ", u8"ɚ", u8"ɝ" };
