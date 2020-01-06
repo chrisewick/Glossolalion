@@ -105,39 +105,40 @@ void PresenterObject::AddPhonemeToLanguageModel(std::string identifier)
     m_LanguageModel->GetSoundInventory()->AddPhonemeByIdentifier(identifier);
 }
 
-void PresenterObject::RemovePhonemeFromLanguageModel(std::string identifier)
-{
+void PresenterObject::RemovePhonemeFromLanguageModel(std::string identifier) {
     m_LanguageModel->GetSoundInventory()->RemovePhonemeByIdentifier(identifier);
 }
 
-float PresenterObject::GetPhonemeWeight(std::string identifier)
-{
+float PresenterObject::GetPhonemeWeight(std::string identifier) {
     return m_LanguageModel->GetSoundInventory()->GetPhonemeByIdentifier(identifier)->GetWeight();
 }
 
-void PresenterObject::SetPhonemeWeight(std::string identifier, float new_weight)
-{
+void PresenterObject::SetPhonemeWeight(std::string identifier, float new_weight) {
     m_LanguageModel->GetSoundInventory()->GetPhonemeByIdentifier(identifier)->SetWeight(new_weight);
 }
 
-float PresenterObject::GetWeightForPhone(std::string phoneglyph)
-{
+float PresenterObject::GetWeightForPhone(std::string phoneglyph) {
     return m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->GetWeight();
 }
 
-void PresenterObject::SetWeightForPhone(std::string phoneglyph, float weight)
-{
+void PresenterObject::SetWeightForPhone(std::string phoneglyph, float weight) {
     m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->SetWeight(weight);
 }
 
-bool PresenterObject::GetIsActiveForPhone(std::string phoneglyph)
-{
+bool PresenterObject::GetIsActiveForPhone(std::string phoneglyph) {
     return m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->GetIsActive();
 }
 
-void PresenterObject::SetIsActiveForPhone(std::string phoneglyph, bool value)
-{
-    m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph)->SetIsActive(value);
+void PresenterObject::SetIsActiveForPhone(std::string phoneglyph, bool value) {
+    Phone* phone = m_LanguageModel->GetSoundInventory()->GetPhoneSet()->GetPhoneByIPAGlyph(phoneglyph);
+    if (phone != nullptr) {
+        phone->SetIsActive(value);
+        if (value == true) {
+            AddPhonemeToLanguageModel(phoneglyph);
+        } else {
+            RemovePhonemeFromLanguageModel(phoneglyph);
+        }
+    }
 }
 
 void PresenterObject::RandomizeWeightsForAllActivePhones()

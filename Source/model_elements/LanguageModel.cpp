@@ -25,14 +25,20 @@ bool LanguageModel::CreateVocabulary()
     //morphology as the next major concept in word construction.
     //That is, I would likely have a Morpheme class and a MorphemeInventory.
 
-    if (m_Vocabulary.empty()) {
-        for (uint32 i = 0; i < m_VocabularySize; i++) {
-            m_Vocabulary.push_back(new Word(this, m_SoundInventory));
+    // If the vocabulary isn't empty, purge it.
+    if (m_Vocabulary.empty() == false) {
+        std::vector<Word*>::iterator it;
+        for (it = m_Vocabulary.begin(); it != m_Vocabulary.end(); ++it) {
+            delete *it;
         }
-        return true;
-    } else {
-        return false;
+        m_Vocabulary.clear();
     }
+
+    // Make a new vocabulary.
+    for (uint32 i = 0; i < m_VocabularySize; i++) {
+        m_Vocabulary.push_back(new Word(this, m_SoundInventory));
+    }
+    return true;
 }
 
 std::vector<Word*> LanguageModel::GetVocabulary()

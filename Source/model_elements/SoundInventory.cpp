@@ -85,22 +85,29 @@ PhoneSet* SoundInventory::GetPhoneSet()
 void SoundInventory::AddPhonemeByIdentifier(std::string identifier)
 {
     Phone* phone = m_PhoneSet->GetPhoneByIPAGlyph(identifier);
-    for (auto phoneme : m_PhonemePool) {
-        if (phoneme->GetPhone() == phone) {
-            return;
+    // If the phoneme is already in the library somehow, don't bother adding it.
+    if (phone != nullptr) {
+        for (auto phoneme : m_PhonemePool) {
+            if (phoneme->GetPhone() == phone) {
+                return;
+            }
         }
+        // Otherwise, add it to the phoneme pool!
+        m_PhonemePool.push_back(new Phoneme(phone, phone->GetWeight()));
     }
-    m_PhonemePool.push_back(new Phoneme(phone, 1.f));
 }
 
 void SoundInventory::RemovePhonemeByIdentifier(std::string identifier)
 {
     Phone* phone = m_PhoneSet->GetPhoneByIPAGlyph(identifier);
-    for (int i = 0; i < m_PhonemePool.size(); i++) {
-        if (m_PhonemePool[i]->GetPhone() == phone) {
-            delete m_PhonemePool[i];
-            m_PhonemePool.erase(m_PhonemePool.begin() + i);
-            return;
+    if (phone != nullptr) {
+        for (int i = 0; i < m_PhonemePool.size(); i++) {
+            if (m_PhonemePool[i]->GetPhone() == phone) {
+                delete m_PhonemePool[i];
+                m_PhonemePool.erase(m_PhonemePool.begin() + i);
+                // We should only ever have one instance of a phone, so return on success.
+                return;
+            }
         }
     }
 }
@@ -142,7 +149,7 @@ void SoundInventory::PickRandomVowels()
     for (int i = 0; i < m_VowelPoolSize; i++) {
         Phoneme* phoneme;
         do {
-            phoneme = GetRandomPhone(vowel_phones);
+            phoneme = MakeRandomPhoneme(vowel_phones);
         } while(CheckIsUniquePhoneme(phoneme) == false);
         phoneme->GetPhone()->SetIsActive(true); // Activate the phone.
         m_PhonemePool.push_back(phoneme);
@@ -175,14 +182,14 @@ void SoundInventory::PickRandomConsonants()
     for (int i = 0; i < m_PhonemePoolSize - m_VowelPoolSize; i++) {
         Phoneme* phoneme;
         do {
-            phoneme = GetRandomPhone(consonant_phones);
+            phoneme = MakeRandomPhoneme(consonant_phones);
         } while (CheckIsUniquePhoneme(phoneme) == false);
         phoneme->GetPhone()->SetIsActive(true); // Activate the phone.
         m_PhonemePool.push_back(phoneme);
     }
 }
 
-Phoneme* SoundInventory::GetRandomPhone(std::vector<Phone*> phone_mini_pool)
+Phoneme* SoundInventory::MakeRandomPhoneme(std::vector<Phone*> phone_mini_pool)
 {
     float searchsize = GetRandomNormal() * (float)phone_mini_pool.size();
     Phoneme* newphoneme = nullptr;

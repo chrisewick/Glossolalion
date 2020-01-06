@@ -57,7 +57,7 @@ private:
     std::string m_Plosives[PLOSIVES] = { u8"p", u8"b", u8"t", u8"d", u8"ʈ", u8"ɖ", u8"c", u8"ɟ", u8"k", u8"ɡ", u8"q", u8"ɢ", u8"ʔ" };
     std::string m_PlosivesOrthos[PLOSIVES] = { "p", "b", "t", "d", "t", "d", "c", "j", "k", "g", "q", "g", "-" };
     std::string m_Nasals[NASALS] = { u8"m", u8"ɱ", u8"n", u8"ɳ", u8"ɲ", u8"ŋ", u8"ɴ" };
-    std::string m_NasalsOrthos[NASALS] = { "m", "m", "n", "n", "ng", "ng" };
+    std::string m_NasalsOrthos[NASALS] = { "m", "m", "n", "n", "ng", "ng", u8"ɴ" };
     std::string m_TrillsTaps[TRILLS] = { u8"ʙ", u8"ⱱ", u8"r", u8"ɾ", u8"ɽ", u8"ʀ" };
     std::string m_TrillsTapsOrthos[TRILLS] = { "br", "v", "r", "r", "r", "r" };
     std::string m_Fricatives[FRICATIVES] = { u8"ɸ", u8"β", u8"f", u8"v", u8"θ", u8"ð", u8"s", u8"z", u8"ʃ", u8"ʒ", u8"ʂ", u8"ʐ", u8"ç", u8"ʝ", u8"x", u8"ɣ", u8"χ", u8"ʁ", u8"ħ", u8"ʕ", u8"h", u8"ɦ" };

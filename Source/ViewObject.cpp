@@ -119,7 +119,6 @@ void ViewObject::syllableMaximumCallback(Fl_Widget * w, void * v)
 
 void ViewObject::GenerateVocabularyButtonCallback(Fl_Widget * w, void* v)
 {
-	m_Presenter->CreateVocabulary();
 	std::string* returnString = m_Presenter->GetAllWordsAsStringPtr();
 	m_VocabularyTextDisplayIPA_Buffer->text(returnString->c_str());
     delete returnString;
@@ -133,6 +132,7 @@ void ViewObject::GenerateOrthographicVocabulary() {
 
 void ViewObject::GenerateVocabularyButtonStaticCallback(Fl_Widget *w, void *v)
 {
+    ((ViewObject*)v)->GetPresenter()->CreateVocabulary();
 	((ViewObject*)v)->GenerateVocabularyButtonCallback(w, ((ViewObject*)v)->m_VocabularyTextDisplayIPA);
     ((ViewObject*)v)->GenerateOrthographicVocabulary();
 }
